@@ -6,10 +6,10 @@ Program konsolowy w C++ symulujący system wypożyczalni multimediów. Umożliwi
 
 ## Struktura projektu
 
-main.cpp - logika menu i główna pętla programu
-functions.h - deklaracje klas i szablonów
-functions.cpp - definicje metod
-makefile - reguły kompilacji
+- main.cpp - logika menu i główna pętla programu
+- functions.h - deklaracje klas i szablonów
+- functions.cpp - definicje metod
+- makefile - reguły kompilacji
 
 ## Funckje programu
 
