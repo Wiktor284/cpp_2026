@@ -24,3 +24,37 @@ Program konsolowy w C++ symulujący system wypożyczalni multimediów. Umożliwi
 - Kompilator C++ który obsłguje standard **C++17**
 
 ## Jak uruchomić program
+
+### 1.Pobranie z GitHub
+
+Otwórz terminal i wpisz :
+```bash
+git clone https://github.com/Wiktor284/cpp_2026.git
+cd cpp_2026
+```
+### 2.Kompilacja
+```bash
+# Linux / macOS
+make
+
+# Windows (MinGW)
+g++ -std=c++17 functions.cpp main.cpp -o biblioteka.exe
+```
+### 3.Uruchamianie
+```bash
+# Linux / macOS
+./biblioteka
+
+# Windows (MinGW)
+./biblioteka.exe
+```
+### 4.Czyszczenie plików tymczasowych
+```bash
+# Linux / macOS
+make clean
+
+# Windows (MinGW)
+# (CMD)
+del *.o biblioteka.exe
+# (PowerShell)
+Remove-Item *.o, biblioteka.exe
