@@ -11,7 +11,7 @@ Program konsolowy w C++ symulujący system wypożyczalni multimediów. Umożliwi
 - functions.cpp - definicje metod
 - makefile - reguły kompilacji
 
-## Funckje programu
+## Funkcje programu
 
 - Wyświetlanie wszystkich zasobów i statystyk
 - Przegląd zasobów posortowanych według kategorii
