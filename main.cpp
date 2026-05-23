@@ -7,7 +7,7 @@ double wczytajLiczbe(const string& prompt, double min = 0.0) {
     double wartosc;
     while (true) {
         cout << prompt;
-        if (cin >> wartosc) {
+        if (cin >> wartosc) { //zwraca false jak cos innego niz liczba
             if (wartosc >= min) {
                 break;
             } else {
@@ -48,7 +48,7 @@ char wczytajStatus() {
     while (true) {
         cout << "Podaj status pozycji (D - dostepna, W - wypozyczona): ";
         cin >> status;
-        status = toupper(status);
+        status = toupper(status); //akceptuje tylko D i W(mala czcionka tez)
         if (status == 'D' || status == 'W')
             break;
         cout << "  Niepoprawny status. Dozwolone wylacznie: D lub W.\n";
@@ -67,18 +67,18 @@ int main() {
     array<string, 4> kategorie = {"Ksiazka", "Film", "Gra", "Inne (Wlasne)"};
 
     int opcja = 0;
-    while (opcja != 5) {
+    while (opcja != 5) { //glowna petla(dziala dopoki uzytkownik nie wybierze opcji 5)
         cout << "\n\n";
         wypisz_menu();
 
         if (!(cin >> opcja)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            continue;
+            continue; //wraca na poczatek petli
         }
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        switch (opcja) {
+        switch (opcja) {  //konkretne przypadki 
             case 1: {
                 cout << "\n\n--- AKTUALNE ZASOBY BIBLIOTEKI ---\n\n";
                 if (biblioteka.empty())
@@ -105,7 +105,7 @@ int main() {
                     }
                     if (!znalazlem) cout << "  (brak pozycji w tej kategorii)\n";
                 }
-
+                      //pozycja jest inna jak jej kategoria nie pasuje do zadnej z 3 opcji standardowych
                 cout << "\n[Inne Wlasne Kategorie Zdefiniowane Przez Uzytkownika]:\n";
                 bool inne_znalazlem = false;
                 for (const auto* p : biblioteka) {
@@ -124,6 +124,7 @@ int main() {
                 if (!inne_znalazlem) cout << "  (brak pozycji)\n";
                 break;
             }
+                                    //dodawanie nowego zasobu do biblioteki
             case 3: {
                 cout << "\n\n--- REJESTRACJA NOWEGO ZASOBU ---\n\n";
                 cout << "Wybierz kategoria rejestracji:\n";
@@ -209,6 +210,7 @@ int main() {
                 cout << "\nZasob zostal poprawnie zainicjalizowany i dodany do bazy.\n";
                 break;
             }
+                                 //wypozyczanie i zwracanie
             case 4: {
                 cout << "\n\n--- PANEL WYPOZYCZEN I ZWROTOW (OBSLUGA WYJATKOW) ---\n\n";
                 cout << "1. Wypozycz pozycje\n";
@@ -219,7 +221,7 @@ int main() {
                 cout << "Podaj Tytul lub numer ISBN/ID pozycji: ";
                 getline(cin, identyfikator);
 
-                try {
+                try {     //obsluguje wyjatki(try-catch) zeby nie crashowal przy blednych danych tylko wypisuje komunikat
                     if (tryb == 1) {
                         biblioteka.wypozycz(identyfikator);
                         cout << "Sukces: Pozycja \"" << identyfikator << "\" zostala pomyślnie wypozyczona.\n";
@@ -230,22 +232,22 @@ int main() {
                         cout << "Niepoprawny wybor operacji w panelu.\n";
                     }
                 }
-                catch (const out_of_range& e) {
+                catch (const out_of_range& e) { //nie istnieje w bazie
                     cout << "Blad krytyczny wyszukiwania (out_of_range): " << e.what() << "\n";
                 }
-                catch (const logic_error& e) {
+                catch (const logic_error& e) { //pozycja isnieje ale operacja jest logicznie niemozliwa
                     cout << "Blad stanu logicznego obiektu (logic_error): " << e.what() << "\n";
                 }
                 break;
             }
         }
-
+            //po kazdej operacji oprocz 5(wyjscie) czekamy az uzytkownik kliknie enter zanym wyswietli menu
         if (opcja != 5) {
             cout << "\nNacisnij ENTER aby kontynuowac...";
             czekaj_na_enter();
         }
     }
-
+              //wyswietlenie raportu
     cout << "\n\n=== RAPORT KONCOWY ZAMKNIECIA SYSTEMU (SORTOWANIE PO CENIE DOBOWEJ) ===\n\n";
     biblioteka.sortujPoCenie();
     cout << biblioteka;
