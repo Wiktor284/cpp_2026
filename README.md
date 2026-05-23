@@ -16,7 +16,7 @@ Program konsolowy w C++ symulujący system wypożyczalni multimediów. Umożliwi
 - Wyświetlanie wszystkich zasobów i statystyk
 - Przegląd zasobów posortowanych według kategorii
 - Wypożyczanie i zwracanie pozycji z obslugą wyjatków
-- Raport końcowy(lista wszystkich zasobów posortowana po cenie dobowej
+- Raport końcowy(lista wszystkich zasobów posortowana po cenie dobowej)
 
 ## Wymagania 
 
