@@ -1,7 +1,7 @@
 #include "functions.h"
 using namespace std;
 
-//konstruktor klasy bazowej Pozycja
+//konstruktor klasy bazowej pozycja
 Pozycja::Pozycja(const string& t, const string& i, double c, char s)
     : tytul(t), isbn(i), cenaDoba(c), status(s) {}
 
@@ -9,7 +9,7 @@ Pozycja::Pozycja(const string& t, const string& i, double c, char s)
 Ksiazka::Ksiazka(const string& t, const string& i, double c, char s, const string& a, int r)
     : Pozycja(t, i, c, s), autor(a), rokWydania(r) {}
 
-Ksiazka::Ksiazka(const Ksiazka& other)
+Ksiazka::Ksiazka(const Ksiazka& other)   //konstruktor kopiujacy
     : Pozycja(other), autor(other.autor), rokWydania(other.rokWydania) {}
 
 void Ksiazka::wyswietl() const {
@@ -24,7 +24,7 @@ Pozycja* Ksiazka::clone() const { return new Ksiazka(*this); }
 Film::Film(const string& t, const string& i, double c, char s, const string& r, int cz)
     : Pozycja(t, i, c, s), rezyser(r), czasTrwania(cz) {}
 
-Film::Film(const Film& other)
+Film::Film(const Film& other) //konstruktor kopiujacy
     : Pozycja(other), rezyser(other.rezyser), czasTrwania(other.czasTrwania) {}
 
 void Film::wyswietl() const {
@@ -38,7 +38,7 @@ Pozycja* Film::clone() const { return new Film(*this); }
 Gra::Gra(const string& t, const string& i, double c, char s, const string& p, int w)
     : Pozycja(t, i, c, s), platforma(p), minWiek(w) {}
 
-Gra::Gra(const Gra& other)
+Gra::Gra(const Gra& other) //konstruktor kopiujacy
     : Pozycja(other), platforma(other.platforma), minWiek(other.minWiek) {}
 
 void Gra::wyswietl() const {
@@ -52,7 +52,7 @@ Pozycja* Gra::clone() const { return new Gra(*this); }
 DynamicznaPozycja::DynamicznaPozycja(const string& t, const string& i, double c, char s, const string& k, const string& info)
     : Pozycja(t, i, c, s), kat_nazwa(k), dodatkowe_info(info) {}
 
-DynamicznaPozycja::DynamicznaPozycja(const DynamicznaPozycja& other)
+DynamicznaPozycja::DynamicznaPozycja(const DynamicznaPozycja& other) //konstruktor kopiujacy
     : Pozycja(other), kat_nazwa(other.kat_nazwa), dodatkowe_info(other.dodatkowe_info) {}
 
 void DynamicznaPozycja::wyswietl() const {
@@ -68,7 +68,7 @@ void czekaj_na_enter() {
     getline(cin, s);
 }
 
-void wypisz_menu() {
+void wypisz_menu() {  //wypisuje glowne menu
     array<string, 5> opcje = {
         "(1). Pokaz wszystkie zasoby i statystyki biblioteki",
         "(2). Pokaz zasoby podzielone strukturalnie na kategorie",
