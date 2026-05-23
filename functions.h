@@ -12,7 +12,7 @@
 
 using namespace std;       //umozliwia pisanie cout, cin, vector, string itp. bez std::
 
-//klasa abstrakcyjna pozycja
+//klasa abstrakcyjna (pozycja)(bazowa klasa dla wszystkich zasobow)
 class Pozycja {
 protected:     //klasy dziedziczace maja bezposredni dostep do tych pol
     string tytul;
@@ -28,27 +28,29 @@ public:
     virtual ~Pozycja() = default;
 
     //wirtualne metody do polimorficznego zarzadzania obiektami
-    virtual void        wyswietl()     const = 0;
+    virtual void        wyswietl()     const = 0;  //metoda nie modyfikuje stanu obiektu
     virtual string      getKategoria() const = 0;
     virtual Pozycja* clone()        const = 0;
 
-    //gettery
+    //gettery(publiczne metody odczytu, mozna dane tylko odczytac)
     string getTytul()    const { return tytul; }
     string getIsbn()     const { return isbn; }
     double getCenaDoba() const { return cenaDoba; }
     char   getStatus()   const { return status; }
-    void   setStatus(char s)   { status = s; }
+    void   setStatus(char s)   { status = s; }   //wyjatek(zmiana z D na W i na odwrot)
 
-    //przeciazone operatory (do porownywania i sortowania pozycji)
+    //przeciazone operatory (do porownywania pozycji po cenie doby i sortowania pozycji wedlug ceny)
     bool operator<(const Pozycja& o) const { return cenaDoba < o.cenaDoba; }
+    //pozycje sa rowne jak maja ten sam tytul lub ISBN
     bool operator==(const Pozycja& o) const { return tytul == o.tytul || isbn == o.isbn; }
 };
 
-//klasy dziedziczace po pozycjach
-                                     //ksiazka
+//klasa pochodna : ksiazka
+//klasy dziedziczace po pozycji
 class Ksiazka : public Pozycja {
     string autor;
     int rokWydania;
+                //kostruktor tworzacy nowa ksiazke (przyjmuje dane i przekazuje)
 public:
     Ksiazka(const string& t, const string& i, double c, char s, const string& a, int r);
     Ksiazka(const Ksiazka& other);    //konstruktor kopiujacy
@@ -56,8 +58,8 @@ public:
     string getKategoria() const override;
     Pozycja* clone() const override;
 };
-
-                                     //film
+//klasa pochodna : film
+                                     //reszta analogicznie
 class Film : public Pozycja {
     string rezyser;
     int czasTrwania; //w minutach
@@ -68,8 +70,8 @@ public:
     string getKategoria() const override;
     Pozycja* clone() const override;
 };
-
-                                     //gra
+//klasa pochodna : gra
+                                     //analogicznie
 class Gra : public Pozycja {
     string platforma;
     int minWiek;
@@ -80,8 +82,8 @@ public:
     string getKategoria() const override;
     Pozycja* clone() const override;
 };
-
-                   //DynamicznaPozycja (dla niestandardowych kategorii uzytkownika)
+//klasa pochodna : DynamicznaPozycja
+                   //dla niestandardowych kategorii uzytkownika, reszta analogicznie
 class DynamicznaPozycja : public Pozycja {
     string kat_nazwa;
     string dodatkowe_info;
@@ -100,7 +102,7 @@ private:
     vector<T*> zasoby;      //wektor wskaznikow umozliwiajacy polimorfizm
 
 public:
-    //domyslny konstruktor
+    //domyslny konstruktor(tworzy pusta biblioteke)
     Biblioteka() = default;
 
     //destruktor (zwalnia dynamicznie alokowana pamiec (RAII))
@@ -125,7 +127,7 @@ public:
             for (const auto* p : other.zasoby)
                 zasoby.push_back(p->clone());
         }
-        return *this;
+        return *this; //zwraca refencje do siebie(umozliwia lancuchowanie a=b=c)
     }
 
     //dodanie nowej pozycji
@@ -133,7 +135,7 @@ public:
         zasoby.push_back(p);
     }
 
-    //wypozyczenie pozycji (wyszukiwanie przez find_if i rzucanie wyjatkow)
+    //wypozyczenie pozycji (wyszukiwanie przez find_if i rzucanie wyjatkow aby nie zwrocilo bledu)
     void wypozycz(const string& wzorzec) {
         auto it = find_if(zasoby.begin(), zasoby.end(), [&wzorzec](T* p) {
             return p->getTytul() == wzorzec || p->getIsbn() == wzorzec;
@@ -163,12 +165,12 @@ public:
         (*it)->setStatus('D');
     }
 
-    //sortowanie po cenie dobowej najmu (uzywa przeciazonego operatora <)
+    //sortowanie rosnaco po cenie dobowej najmu (uzywa przeciazonego operatora <)
     void sortujPoCenie() {
         sort(zasoby.begin(), zasoby.end(), [](T* a, T* b) { return *a < *b; });
     }
 
-    //metody pomocnicze
+    //metody pomocnicze(sparwdza czy biblioteka jest pusta)
     bool empty() const { return zasoby.empty(); }
     const vector<T*>& getZasoby() const { return zasoby; }
 
@@ -176,8 +178,8 @@ public:
     auto begin() const { return zasoby.begin(); }
     auto end()   const { return zasoby.end(); }
 
-    //deklaracja zaprzyjaznionego operatora strumieniowego
-    template <typename U>
+    //deklaracja zaprzyjaznionego operatora strumieniowego(daje funkcji zewnetrznej dostep do prywatnych pol klasy
+    template <typename U>  //potrzebne bo funcja sama jest szablonem
     friend ostream& operator<<(ostream& os, const Biblioteka<U>& bib);
 };
 
@@ -202,8 +204,7 @@ void wypisz_statystyki(const Biblioteka<T>& bib) {
     //uzycie algorytmu STL max_element
     auto mx = max_element(v.begin(), v.end(), [](T* a, T* b) { return *a < *b; });
     double suma = 0;
-
-    for (const auto* p : v)
+    for (const auto* p : v)   //sumuje ceny liczac potencjalny dochod
         suma += p->getCenaDoba();
 
     cout << "  Liczba wszystkich pozycji: " << v.size() << "\n";
