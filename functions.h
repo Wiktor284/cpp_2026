@@ -99,7 +99,7 @@ public:
 template <typename T>
 class Biblioteka {
 private:
-    vector<T*> zasoby;      //wektor wskaznikow umozliwiajacy polimorfizm
+    vector<T*> zasoby;      //wektor wskaznikow umozliwiajacy polimorfizm(uniwersalny typ T)
 
 public:
     //domyslny konstruktor(tworzy pusta biblioteke)
