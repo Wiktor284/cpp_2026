@@ -232,10 +232,12 @@ int main() {
                         cout << "Niepoprawny wybor operacji w panelu.\n";
                     }
                 }
-                catch (const out_of_range& e) { //nie istnieje w bazie
+                catch (const out_of_range& e) { //nie istnieje w bazie 
+                                                          //lapie konkretny blad braku pozycji
                     cout << "Blad krytyczny wyszukiwania (out_of_range): " << e.what() << "\n";
                 }
                 catch (const logic_error& e) { //pozycja isnieje ale operacja jest logicznie niemozliwa
+                                                   //lapie konkretny blad logiczny
                     cout << "Blad stanu logicznego obiektu (logic_error): " << e.what() << "\n";
                 }
                 break;
