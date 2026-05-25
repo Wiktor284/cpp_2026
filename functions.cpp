@@ -5,7 +5,7 @@ using namespace std;
 Pozycja::Pozycja(const string& t, const string& i, double c, char s)
     : tytul(t), isbn(i), cenaDoba(c), status(s) {}
 
-//klasa ksiazka
+//konstruktor klasy pochodnej ksiazka
 Ksiazka::Ksiazka(const string& t, const string& i, double c, char s, const string& a, int r)
     : Pozycja(t, i, c, s), autor(a), rokWydania(r) {}
 
@@ -20,7 +20,7 @@ void Ksiazka::wyswietl() const {
 string Ksiazka::getKategoria() const { return "Ksiazka"; }
 Pozycja* Ksiazka::clone() const { return new Ksiazka(*this); }
 
-//klasa film
+//konstruktor klasy pochodnej film
 Film::Film(const string& t, const string& i, double c, char s, const string& r, int cz)
     : Pozycja(t, i, c, s), rezyser(r), czasTrwania(cz) {}
 
@@ -34,7 +34,7 @@ void Film::wyswietl() const {
 string Film::getKategoria() const { return "Film"; }
 Pozycja* Film::clone() const { return new Film(*this); }
 
-//klasa gra
+//konstruktor klasy pochodnej gra
 Gra::Gra(const string& t, const string& i, double c, char s, const string& p, int w)
     : Pozycja(t, i, c, s), platforma(p), minWiek(w) {}
 
@@ -48,7 +48,7 @@ void Gra::wyswietl() const {
 string Gra::getKategoria() const { return "Gra"; }
 Pozycja* Gra::clone() const { return new Gra(*this); }
 
-//klasa DynamicznaPozycja
+//konstruktor klasy pochodnej DynamicznaPozycja
 DynamicznaPozycja::DynamicznaPozycja(const string& t, const string& i, double c, char s, const string& k, const string& info)
     : Pozycja(t, i, c, s), kat_nazwa(k), dodatkowe_info(info) {}
 
