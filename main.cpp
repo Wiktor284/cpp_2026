@@ -108,7 +108,7 @@ int main() {
                       //pozycja jest inna jak jej kategoria nie pasuje do zadnej z 3 opcji standardowych
                 cout << "\n[Inne Wlasne Kategorie Zdefiniowane Przez Uzytkownika]:\n";
                 bool inne_znalazlem = false;
-                for (const auto* p : biblioteka) {
+                for (const auto* p : biblioteka) { //zakresowa petla for
                     bool standardowa = false;
                     for (size_t i = 0; i < 3; ++i) {           //sprawdzamy 3 wbudowane kategorie
                         if (p->getKategoria() == kategorie[i]) {
