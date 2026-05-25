@@ -141,10 +141,12 @@ public:
             return p->getTytul() == wzorzec || p->getIsbn() == wzorzec;
         });
 
-        if (it == zasoby.end())
+        if (it == zasoby.end()) 
+                                      //rzucenie wytjatku braku elementu w bazie 
             throw out_of_range("Brak pozycji o podanym tytule/ISBN w bazie danych!");
 
         if ((*it)->getStatus() == 'W')
+                                     //rzucenie wyjatku bledu stanu logicznego
             throw logic_error("Ta pozycja jest aktualnie juz wypozyczona!");
 
         (*it)->setStatus('W');
