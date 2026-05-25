@@ -186,8 +186,8 @@ public:
 //definicja zaprzyjaznionego operatora << dla klasy Biblioteka
 template <typename T>
 ostream& operator<<(ostream& os, const Biblioteka<T>& bib) {
-    for (const auto* p : bib.zasoby) {
-        p->wyswietl();   //wywolanie polimorficzne
+    for (const auto* p : bib.zasoby) { //iterowanie po wewnetrznym wektorze w operatorze <<
+        p->wyswietl();   //wywolanie polimorficzne dla kazdego elementu wektora
     }
     return os;
 }
