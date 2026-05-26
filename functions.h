@@ -180,7 +180,7 @@ public:
     auto begin() const { return zasoby.begin(); }
     auto end()   const { return zasoby.end(); }
 
-    //deklaracja zaprzyjaznionego operatora strumieniowego(daje funkcji zewnetrznej dostep do prywatnych pol klasy
+    //deklaracja zaprzyjaznionego operatora strumieniowego(daje funkcji zewnetrznej dostep do prywatnych pol klasy)
     template <typename U>  //potrzebne bo funcja sama jest szablonem
     friend ostream& operator<<(ostream& os, const Biblioteka<U>& bib);
 };
