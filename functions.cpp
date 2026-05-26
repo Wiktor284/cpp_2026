@@ -77,7 +77,8 @@ void wypisz_menu() {  //wypisuje glowne menu
         "(5). Wyjdz z programu i wygeneruj raport koncowy"
     };
     cout << "--- SYSTEM ZARZADZANIA WYPOZYCZALNIA / BIBLIOTEKA ---\n\n";
-    for (const auto& opcja : opcje) //iterowanie po kontenerze
+//iterowanie po kontenerze(const-nie modyfikuje elementu, auto&-kompilator sam rozpoznaje typ string i nie kopiuje elementu)
+    for (const auto& opcja : opcje) 
         cout << "  " << opcja << "\n";
     cout << "\nWybierz opcje: ";
 }
